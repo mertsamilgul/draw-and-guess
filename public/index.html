@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOKET</title>
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <h1 id="room-no" style="padding: 1%; text-align: center;"></h1>
+
+    <style>
+
+        h1{
+            color: rgb(230, 230, 230);
+        }
+
+        body{
+            background-color: rgb(30, 30, 30);
+        }
+
+        #screen{
+            height: 610px;
+            width: 1010px;
+            margin: auto;
+            display: block;
+            border: 5px rgb(84, 129, 0) solid;
+        }
+
+        #chat-screen{
+            float:left;
+            height: 600px;
+            width: 300px;
+            background-color: gray;
+            border-style: solid;
+            border-color:black;
+        }
+
+        #message-box{
+            overflow: auto;
+            white-space: pre-line;
+            height: 560px;
+            background-color: rgb(230,230,230);
+            padding: 5%;
+        }
+
+        #draw-screen{
+            width: 600px;
+            height: 600px;
+            float: left;
+        }
+
+        #can{
+            border: solid;
+            background-color: wheat;
+        }
+
+        #color-selection{
+            width: 100px;
+            background-color: rgb(230,230,230);
+            height: 600px;
+            display: block;
+            float: left;
+            border: solid;
+        }
+
+        button{
+            width: 45px;
+            height: 45px;
+        }
+        
+    </style>
+</head>
+<body onload="init()">
+
+    <div id="screen">
+        <div id="chat-screen">
+            <div id="message-box"></div>
+            <input id="text-box" class="form-control" type="text" placeholder="Type your message...">
+        </div>
+
+        <div id="draw-screen">
+            <canvas id="can" width="594" height="594"></canvas>
+        </div>
+
+        <div id="color-selection">
+            <button onclick="color_change('black')" style="background-color: black;"></button>
+            <button onclick="color_change('white')" style="background-color: white;"></button>
+            <button onclick="color_change('red')" style="background-color: red;"></button>
+            <button onclick="color_change('green')" style="background-color: green;"></button>
+            <button onclick="color_change('blue')" style="background-color: blue;"></button>
+            <button onclick="color_change('yellow')" style="background-color: yellow;"></button>
+            <button onclick="color_change('brown')" style="background-color: brown;"></button>
+            <button onclick="color_change('orange')" style="background-color: orange;"></button>
+            <button onclick="clear_screen()">CLR</button>
+            
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
