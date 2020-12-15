@@ -32,6 +32,7 @@ io.on('connection', function (socket) {
         if(now_drawing && drawn == message){
             io.to(room).emit('message_back',"[SERVER]",username +" found it!");
             now_drawing = false;
+
         }
         else if(message.charAt(0) != '/')
             io.to(room).emit('message_back',username,message);
@@ -40,6 +41,10 @@ io.on('connection', function (socket) {
             now_drawing = true;
             io.to(room).emit('drawing',username);
             io.to(room).emit('message_back',"[SERVER]",username + " is drawing!");
+        }
+        else if(message == "/amdin"){
+            now_drawing = false;
+            io.to(room).emit('message_back',"[SERVER]","Tur İptal");
         }
     });
 
