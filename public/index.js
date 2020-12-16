@@ -21,7 +21,7 @@ loc[]
 */
 
 function init() {
-    canvas = document.getElementById('can');
+    canvas = document.getElementById('canvas');
     ctx = canvas.getContext("2d");
     width = canvas.width;
     height = canvas.height;
@@ -48,10 +48,6 @@ function draw() {
     ctx.lineWidth = size;
     ctx.stroke();
     ctx.closePath();
-}
-
-function clear_screen() {
-    ctx.clearRect(0, 0, width, height);
 }
 
 function findxy(mouse, e) {
@@ -87,8 +83,7 @@ function findxy(mouse, e) {
     }
 }
 
-function color_change(color)
-{
+function color_change(color){
     loc[4] = color;
 }
 ////////////////////////////////////////////////
@@ -96,6 +91,7 @@ const room_no = document.getElementById('room-no');
 const mbox = document.getElementById("message-box");
 const username = prompt("isim giriniz?","Drawer#" + (Math.floor(Math.random() * 1000)));
 const tbox = document.getElementById('text-box');
+const pbar = document.getElementById("p-bar");
 
 var room=null;
 
@@ -105,7 +101,7 @@ socket.on('connect', () => {});
 
 socket.on('joined', (room_id) => {
     room = room_id;
-    room_no.innerText = "ÇİZANLAT"; // room number
+    room_no.innerText = "DRAW N GUESS"; // room number
     socket.emit('joined',room_id,username); 
 });
 
@@ -114,7 +110,9 @@ socket.on('message_back', (username_,message) => {
 });
 
 socket.on('draw',(username_,loc_) => {
-    if(username != username_){
+    if(loc_ == -1)
+        ctx.clearRect(0, 0, width, height);
+    else if(username != username_){
         loc = loc_
         draw();
     }
@@ -126,7 +124,11 @@ socket.on('drawing',(username_) => {
     else
         drawing=true;
     
-    clear_screen();
+    ctx.clearRect(0, 0, width, height);
+});
+
+socket.on('progress',(seconds) => {
+    pbar.style.width = seconds + "%";
 });
 
 tbox.addEventListener("keyup", function(event){
@@ -150,4 +152,9 @@ function add_message(user,message)
     mbox.appendChild(bold);
     mbox.appendChild(msg);
     mbox.appendChild(document.createElement('br'))
+}
+
+function clear_screen(){
+    if(drawing)
+        socket.emit('draw',room,username,-1);
 }

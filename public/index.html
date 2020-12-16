@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOKET</title>
+    <title>Draw n guess</title>
     <script src="/socket.io/socket.io.js"></script>
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
@@ -22,7 +22,7 @@
         }
 
         #screen{
-            height: 610px;
+            height: 625px;
             width: 1010px;
             margin: auto;
             display: block;
@@ -52,7 +52,7 @@
             float: left;
         }
 
-        #can{
+        #canvas{
             border: solid;
             background-color: wheat;
         }
@@ -67,9 +67,16 @@
         }
 
         button{
-            width: 45px;
+            width: 44px;
             height: 45px;
         }
+
+        #bar{
+            width: 998px;
+            height: 15px;
+        }
+
+        
         
     </style>
 </head>
@@ -82,7 +89,7 @@
         </div>
 
         <div id="draw-screen">
-            <canvas id="can" width="594" height="594"></canvas>
+            <canvas id="canvas" width="594" height="594"></canvas>
         </div>
 
         <div id="color-selection">
@@ -95,9 +102,14 @@
             <button onclick="color_change('brown')" style="background-color: brown;"></button>
             <button onclick="color_change('orange')" style="background-color: orange;"></button>
             <button onclick="clear_screen()">CLR</button>
-            
+        </div>
+
+        <div class="progress" id="bar">
+            <div id="p-bar" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%"></div>
         </div>
     </div>
+
+
     <script src="index.js"></script>
 </body>
 </html>

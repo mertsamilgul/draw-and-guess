@@ -12,10 +12,11 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
+var timer = null;
 var drawn = null;
 var now_drawing = false;
-
-var room_id = "main0";
+var seconds=0;
+var room_id = "main";
 // rooms can be modified
 
 io.on('connection', function (socket) {
@@ -32,7 +33,7 @@ io.on('connection', function (socket) {
         if(now_drawing && drawn == message){
             io.to(room).emit('message_back',"[SERVER]",username +" found it!");
             now_drawing = false;
-
+            clearInterval(timer);
         }
         else if(message.charAt(0) != '/')
             io.to(room).emit('message_back',username,message);
@@ -41,6 +42,19 @@ io.on('connection', function (socket) {
             now_drawing = true;
             io.to(room).emit('drawing',username);
             io.to(room).emit('message_back',"[SERVER]",username + " is drawing!");
+
+            seconds=0;
+            timer = setInterval(function() {
+                io.to(room).emit('progress',seconds);
+                seconds++;
+                if(seconds==100)
+                {
+                    io.to(room).emit('message_back',"[SERVER]","Time Out!");
+                    now_drawing = false;
+                    clearInterval(timer);
+                }
+                    
+            }, 1000);
         }
         else if(message == "/amdin"){
             now_drawing = false;
