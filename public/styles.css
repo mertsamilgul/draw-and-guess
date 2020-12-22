@@ -1,0 +1,79 @@
+.player-list{    
+    width: 142px; /* Set a width if you like */
+}
+
+.player-list a{
+    background-color: #aaa; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    margin: 2px;
+    text-decoration: none; /* Remove underline from links */
+    font-size: small;
+}
+
+h4{
+    text-align: center;
+    padding: 0px;
+    margin: 0px;
+}
+
+#screen{
+    height: 623px;
+    width: 1058px;
+    margin: auto;
+    display: block;
+    border: 5px rgb(94, 99, 84) solid;
+}
+
+#chat-screen{
+    float:left;
+    height: 600px;
+    width: 300px;
+    background-color: gray;
+    border-style: solid;
+    border-color:black;
+}
+
+#message-box{
+    overflow: auto;
+    white-space: pre-line;
+    height: 560px;
+    background-color: rgb(230,230,230);
+    padding: 5%;
+}
+
+#draw-screen{
+    width: 600px;
+    height: 600px;
+    float: left;
+}
+
+#canvas{
+    border: solid;
+    background-color: wheat;
+}
+
+#side-menu{
+    width: 148px;
+    background-color: rgb(230,230,230);
+    height: 600px;
+    display: block;
+    float: left;
+    border: solid;
+}
+
+button{
+    width: 44px;
+    height: 45px;
+}
+
+#bar{
+    width: 1045px;
+    height: 15px;
+}
+
+#color-picker{
+    width: 140px;
+    height: 140px;
+}

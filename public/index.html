@@ -6,81 +6,15 @@
     <title>Draw n guess</title>
     <script src="/socket.io/socket.io.js"></script>
     
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
     integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    <h1 id="room-no" style="padding: 1%; text-align: center;"></h1>
+    <h1 id="room-no" style="padding: 1%; text-align: center; color: rgb(230, 230, 230);"></h1>
 
-    <style>
-
-        h1{
-            color: rgb(230, 230, 230);
-        }
-
-        body{
-            background-color: rgb(30, 30, 30);
-        }
-
-        #screen{
-            height: 625px;
-            width: 1010px;
-            margin: auto;
-            display: block;
-            border: 5px rgb(84, 129, 0) solid;
-        }
-
-        #chat-screen{
-            float:left;
-            height: 600px;
-            width: 300px;
-            background-color: gray;
-            border-style: solid;
-            border-color:black;
-        }
-
-        #message-box{
-            overflow: auto;
-            white-space: pre-line;
-            height: 560px;
-            background-color: rgb(230,230,230);
-            padding: 5%;
-        }
-
-        #draw-screen{
-            width: 600px;
-            height: 600px;
-            float: left;
-        }
-
-        #canvas{
-            border: solid;
-            background-color: wheat;
-        }
-
-        #color-selection{
-            width: 100px;
-            background-color: rgb(230,230,230);
-            height: 600px;
-            display: block;
-            float: left;
-            border: solid;
-        }
-
-        button{
-            width: 44px;
-            height: 45px;
-        }
-
-        #bar{
-            width: 998px;
-            height: 15px;
-        }
-
-        
-        
-    </style>
+  
 </head>
-<body onload="init()">
+<body onload="init()" style="background-color: rgb(30, 30, 30);">
 
     <div id="screen">
         <div id="chat-screen">
@@ -92,20 +26,19 @@
             <canvas id="canvas" width="594" height="594"></canvas>
         </div>
 
-        <div id="color-selection">
-            <button onclick="color_change('black')" style="background-color: black;"></button>
-            <button onclick="color_change('white')" style="background-color: white;"></button>
-            <button onclick="color_change('red')" style="background-color: red;"></button>
-            <button onclick="color_change('green')" style="background-color: green;"></button>
-            <button onclick="color_change('blue')" style="background-color: blue;"></button>
-            <button onclick="color_change('yellow')" style="background-color: yellow;"></button>
-            <button onclick="color_change('brown')" style="background-color: brown;"></button>
-            <button onclick="color_change('orange')" style="background-color: orange;"></button>
-            <button onclick="clear_screen()">CLR</button>
+        <div id="side-menu">
+            <h4>Color Picker</h4>
+            <input id="color-picker" onclick="color_pick()" type="color">
+            <button onclick="clear_screen()"></button>
+            <button onclick="clear_screen()"></button>
+            <button onclick="clear_screen()"></button>
+            <br>
+            <h4>Players</h4> 
+            <div id="player-list" class="player-list"></div>
         </div>
 
         <div class="progress" id="bar">
-            <div id="p-bar" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%"></div>
+            <div id="prog-bar" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%"></div>
         </div>
     </div>
 

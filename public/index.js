@@ -22,6 +22,7 @@ loc[]
 
 function init() {
     canvas = document.getElementById('canvas');
+    cpicker = document.getElementById("color-picker");
     ctx = canvas.getContext("2d");
     width = canvas.width;
     height = canvas.height;
@@ -38,6 +39,8 @@ function init() {
     canvas.addEventListener("mouseout", function (e) {
         findxy('out', e)
     }, false);
+
+    cpicker.addEventListener("change", color_pick, false);
 }
 
 function draw() {
@@ -48,6 +51,10 @@ function draw() {
     ctx.lineWidth = size;
     ctx.stroke();
     ctx.closePath();
+}
+
+function color_pick(event) {
+    loc[4] = event.target.value;
 }
 
 function findxy(mouse, e) {
@@ -86,26 +93,35 @@ function findxy(mouse, e) {
 function color_change(color){
     loc[4] = color;
 }
+
 ////////////////////////////////////////////////
 const room_no = document.getElementById('room-no');
 const mbox = document.getElementById("message-box");
-const username = prompt("isim giriniz?","Drawer#" + (Math.floor(Math.random() * 1000)));
+const room = prompt("Room ID:",0);
+const username = prompt("Username?","Drawer#" + (Math.floor(Math.random() * 1000)));
 const tbox = document.getElementById('text-box');
-const pbar = document.getElementById("p-bar");
-
-var room=null;
+const pbar = document.getElementById("prog-bar");
+const plist = document.getElementById("player-list");
+var user_id = null;
 
 const socket = io();
 
-socket.on('connect', () => {});
-
-socket.on('joined', (room_id) => {
-    room = room_id;
-    room_no.innerText = "DRAW N GUESS"; // room number
-    socket.emit('joined',room_id,username); 
+socket.on('connect', () => {
+    socket.emit('joined',room,username);
 });
 
-socket.on('message_back', (username_,message) => {
+socket.on('joined',(uid) => {
+    user_id = uid;
+});
+
+socket.on('deneme', (arr) => {
+    
+    console.log(arr);
+    for(i in arr)
+        console.log("bu" + arr[i]);
+});
+
+socket.on('message', (username_,message) => {
     add_message(username_,message)
 });
 
@@ -128,7 +144,26 @@ socket.on('drawing',(username_) => {
 });
 
 socket.on('progress',(seconds) => {
+
     pbar.style.width = seconds + "%";
+});
+
+socket.on('update_players',(players) => {
+
+    for(i in players)
+    {
+        player = document.getElementById(players[i][0]);
+
+        if(!player){
+            player = document.createElement('a');
+            player.id = players[i][0];
+            plist.appendChild(player);
+        }
+        
+        player.innerText = players[i][0] + " : " + players[i][1];
+    }
+    
+
 });
 
 tbox.addEventListener("keyup", function(event){
